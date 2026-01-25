@@ -23,29 +23,58 @@
     </style>
 </head>
 <body>
-    <aside class="w-20 h-[100vh] md:w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col transition-all">
-
-      <div class="p-8 flex items-center gap-4 ">
-        <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl">
-          <i class="fas fa-terminal"></i>
-        </div>
-        <span class="hidden md:block font-black text-2xl tracking-tighter dark:text-white">Zenflow</span>
+    <div class="flex">
+        <aside class="w-20 h-[100vh] md:w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col transition-all">
+    
+          <div class="p-8 flex items-center gap-4 ">
+            <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl">
+              <i class="fas fa-terminal"></i>
+            </div>
+            <span class="hidden md:block font-black text-2xl tracking-tighter dark:text-white">Zenflow</span>
+          </div>
+          <nav class="flex-1 px-4 space-y-2 mt-4 ">
+          <button id="tasks" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-tasks text-lg w-6 text-center bg-slate-800"></i> Tasks</button>
+           <button id="notes" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-feather text-lg w-6 text-center"></i> Notes</button>
+           <button id="timer" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-rocket text-lg w-6 text-center"></i> Timer</button>
+           <button id="settings" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-user-circle text-lg w-6 text-center"></i> Profile</button>
+          </nav>
+    
+          <!-- Signout -->
+           <div class="p-6">
+            <button id="logout-btn" class="w-full flex items-center gap-5 px-5 py-4 text-slate-400 hover:text-rose-500 rounded-2xl transition-all">
+              <i class="fas fa-power-off text-lg w-6 text-center"></i>
+              <span class="hidden md:block font-bold">Sign Out</span>
+            </button>
+          </div>
+            </aside>
+    
+        <!-- Header -->
+        
+         <div class="flex-1 flex flex-col h-screen overflow-hidden">
+             <header class="h-24 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-slate-200 dark:border-slate-700 px-8 flex items-center justify-between z-50">
+      <div>
+        <h1 class="text-xl font-bold dark:text-white">Hello, Ashish!</h1>
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Ready to create something great?</p>
       </div>
-      <nav class="flex-1 px-4 space-y-2 mt-4 ">
-      <button id="tasks" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-tasks text-lg w-6 text-center bg-slate-800"></i> Tasks</button>
-       <button id="notes" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-feather text-lg w-6 text-center"></i> Notes</button>
-       <button id="timer" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-rocket text-lg w-6 text-center"></i> Timer</button>
-       <button id="settings" class="nav-btn w-full flex items-center gap-5 px-5 py-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"> <i class="fas fa-user-circle text-lg w-6 text-center"></i> Profile</button>
-      </nav>
 
-      <!-- Signout -->
-       <div class="p-6">
-        <button id="logout-btn" class="w-full flex items-center gap-5 px-5 py-4 text-slate-400 hover:text-rose-500 rounded-2xl transition-all">
-          <i class="fas fa-power-off text-lg w-6 text-center"></i>
-          <span class="hidden md:block font-bold">Sign Out</span>
+      <div class="flex items-center gap-6">
+        <button id="theme-btn" class="w-12 h-12 flex items-center justify-center rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 transition-all hover:scale-105">
+          <i class="fas fa-sun"></i>
         </button>
+        <div class="flex items-center gap-4 pl-6 border-l border-slate-200 dark:border-slate-700">
+          <div class="text-right hidden sm:block">
+            <p class="text-sm font-bold dark:text-white">Ashish Singh</p>
+            <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">Master Level</p>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-indigo-200 dark:shadow-none">
+           A
+          </div>
+        </div>
       </div>
-        </aside>
+    </header>
+         </div>
+        </div>
+
     </div>
 </body>
 </html>
