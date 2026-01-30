@@ -6,6 +6,8 @@ const tododListContainer = document.getElementById("todo-list");
 const activeTask = document.getElementById("active-Task");
 const activeTaskContainer = document.getElementById("activeTaskContainer");
 const leftTask = document.querySelector(".left-task");
+const quoteArea = document.querySelector(".quote-area");
+const authorName = document.querySelector(".author-name");
 
 
 //You have 0 tasks waiting for completion
@@ -65,3 +67,27 @@ tododListContainer.addEventListener("click", function (e){
       activeTask.innerText = `You have ${todoCount} tasks waiting for completion`;
 
 });
+
+
+// Fetch Quote from API
+//https://dummyjson.com/quotes
+
+
+async function fetchQuote(url){
+    try {
+        const response = await fetch(url);
+
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const data = await response.json();
+        console.log("Fetched data : ",data.quotes[27]);
+        quoteArea.textContent = `${data.quotes[27].quote}`;
+        authorName.textContent = `- ${data.quotes[27].author}`;
+    } catch (error) {
+        console.error('Error fetching data:', error)
+    }
+}
+
+fetchQuote("https://dummyjson.com/quotes")
