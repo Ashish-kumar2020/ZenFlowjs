@@ -8,7 +8,7 @@ const activeTaskContainer = document.getElementById("activeTaskContainer");
 const leftTask = document.querySelector(".left-task");
 const quoteArea = document.querySelector(".quote-area");
 const authorName = document.querySelector(".author-name");
-
+const currentTemp = document.querySelector(".current-temp");
 
 //You have 0 tasks waiting for completion
 let todoCount = 0;
@@ -88,6 +88,22 @@ async function fetchQuote(url){
     } catch (error) {
         console.error('Error fetching data:', error)
     }
+};
+
+async function fetchWeatherData(url){
+    try {
+        const response = await fetch(url);
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json();
+        console.log("Fetched Weather data : ",data);
+        currentTemp.textContent = `${data.hourly.temperature_2m[0]}°C`
+    } catch (error) {
+        console.error('Error fetching data:', error)
+    }
 }
 
-fetchQuote("https://dummyjson.com/quotes")
+fetchQuote("https://dummyjson.com/quotes");
+
+fetchWeatherData("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m");
