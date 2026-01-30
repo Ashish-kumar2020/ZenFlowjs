@@ -135,13 +135,13 @@
                 </div>
                 <div class="space-y-6">
                     <div class="flex items-center justify-between">
-                        <div>
+                        <div id="activeTaskContainer">
                             <h2 class="text-2xl font-bold dark:text-white">Active Tasks</h2>
-                            <p class="text-sm text-slate-500">You have 0 tasks waiting for completion</p>
+                            <p id="active-Task" class="text-sm text-slate-500"></p>
                         </div>
                         <div class="flex items-center gap-2">
                             <span
-                                class="text-xs font-bold px-3 py-1 bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-full">0
+                                class="left-task text-xs font-bold px-3 py-1 bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-full">0
                                 Left</span>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                         <input type="text" id="todo-input"
                             class="flex-1 p-4 bg-slate-100 dark:bg-slate-900/50 rounded-2xl border border-transparent focus:border-indigo-500 dark:text-white outline-none transition-all"
                             placeholder="Add a new goal...">
-                        <button type="submit"
+                        <button type="submit" id="add-task-button"
                             class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 rounded-2xl font-bold transition-all shadow-lg shadow-indigo-100 dark:shadow-none">Add
                             Task</button>
                     </form>
@@ -162,20 +162,7 @@
                             <p>Your task list is empty. Take a breather!</p>
                         </div>
                          -->
-                        <div
-                            class="group flex items-center gap-4 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 transition-all hover:border-indigo-200 dark:hover:border-indigo-900 ${todo.completed ? 'opacity-50' : ''}">
-                            <button data-id="${todo.id}"
-                                class="toggle-todo w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${todo.completed ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-300 dark:border-slate-600 hover:border-indigo-500'}">
-                                <i class="fas fa-check text-xs"></i>
-                            </button>
-                            <span
-                                class="flex-1 font-medium dark:text-white ${todo.completed ? 'line-through text-slate-500' : ''}">Hi Create this todo list</span>
-                            <button data-id="${todo.id}"
-                                class="delete-todo p-2 text-slate-300 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                       
+                        
                     </div>
                 </div>
         </div>
@@ -188,6 +175,7 @@
 
     </div>
 
+    <script src="./index.js"></script>
 </body>
 
 </html>
