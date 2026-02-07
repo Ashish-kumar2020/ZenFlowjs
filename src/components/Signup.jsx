@@ -21,8 +21,10 @@ import {
   ShieldClose,
   User,
 } from "lucide-react";
+import useGoogleAuth from "./GoogleAuth";
 
 const Signup = () => {
+   const googleLogin = useGoogleAuth();
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -133,15 +135,14 @@ const Signup = () => {
                 </div>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                <Button variant="outline" className="w-full gap-2 text-xs font-bold text-zinc-400">
+              <div className="mt-8 grid grid-cols-1 ">
+                <Button variant="outline" className="w-auto text-xs font-bold text-zinc-400"
+                  onClick={googleLogin}
+                >
                   <FcGoogle size={18} />
                   Google
                 </Button>
-                <Button variant="outline" className="w-full gap-2 text-xs font-bold text-zinc-400">
-                  <FaGithub size={18} />
-                  GitHub
-                </Button>
+                
               </div>
             </div>
           </CardFooter>

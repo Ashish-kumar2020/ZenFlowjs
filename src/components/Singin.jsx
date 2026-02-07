@@ -13,8 +13,10 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 import { KeyRound, Mail, ShieldCheck, User } from "lucide-react";
+import useGoogleAuth from "./GoogleAuth";
 
 const Signin = () => {
+   const googleLogin = useGoogleAuth();
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -103,21 +105,14 @@ const Signin = () => {
                 </div>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                <Button
-                  variant="outline"
-                  className="w-full gap-2 text-xs font-bold text-zinc-400"
+              <div className="mt-8 grid grid-cols-1 ">
+                <Button variant="outline" className="w-auto text-xs font-bold text-zinc-400"
+                  onClick={googleLogin}
                 >
                   <FcGoogle size={18} />
                   Google
                 </Button>
-                <Button
-                  variant="outline"
-                  className="w-full gap-2 text-xs font-bold text-zinc-400"
-                >
-                  <FaGithub size={18} />
-                  GitHub
-                </Button>
+                
               </div>
             </div>
           </CardFooter>
