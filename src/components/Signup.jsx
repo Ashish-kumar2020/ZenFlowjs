@@ -31,30 +31,30 @@ const Signup = () => {
   const googleLogin = useGoogleAuth();
   const navigate = useNavigate();
 
-  const [useDetails, setUserDetails] = useState({
+  const [userDetails, setUserDetails] = useState({
     fullname: "",
     email: "",
     password: "",
   });
-  
+
   const handleSignup = () => {
-    const validation = signupSchema.safeParse(useDetails);
+    const validation = signupSchema.safeParse(userDetails);
     if (!validation.success) {
-      toast.error(validation.error.issues[0].message)
+      toast.error(validation.error.issues[0].message);
       return;
     }
     setUserDetails({
       fullname: "",
       email: "",
-      password: ""
+      password: "",
     });
     toast.success("Successfully signed up! Welcome to ZenFlowjs");
     navigate("/home");
   };
 
   const handleLogin = () => {
-    navigate("/login")
-  }
+    navigate("/login");
+  };
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -92,10 +92,10 @@ const Signup = () => {
                       placeholder="John Doe"
                       className="pl-10"
                       required
-                      value={useDetails.fullname}
+                      value={userDetails.fullname}
                       onChange={(e) =>
                         setUserDetails({
-                          ...useDetails,
+                          ...userDetails,
                           fullname: e.target.value,
                         })
                       }
@@ -123,9 +123,9 @@ const Signup = () => {
                       placeholder="m@example.com"
                       className="pl-10"
                       required
-                      value={useDetails.email}
+                      value={userDetails.email}
                       onChange={(e) =>
-                        setUserDetails({ ...useDetails, email: e.target.value })
+                        setUserDetails({ ...userDetails, email: e.target.value })
                       }
                     />
                   </div>
@@ -151,10 +151,10 @@ const Signup = () => {
                       placeholder="Enter your password"
                       className="pl-10"
                       required
-                      value={useDetails.password}
+                      value={userDetails.password}
                       onChange={(e) =>
                         setUserDetails({
-                          ...useDetails,
+                          ...userDetails,
                           password: e.target.value,
                         })
                       }
@@ -173,8 +173,17 @@ const Signup = () => {
               Signup
             </Button>
             <div>
-            <span className="text-sm text-zinc-400">Already have a Account! </span> <span onClick={handleLogin} className="text-sm text-indigo-500 cursor-pointer hover:text-indigo-300">Login</span>
-
+              <span className="text-sm text-zinc-400">
+                Already have a Account!
+              </span>
+              <Button
+                variant="link"
+                type="button"
+                onClick={handleLogin}
+                className="text-sm text-indigo-500 cursor-pointer w-4 ml-2 hover:text-indigo-300"
+              >
+                Login
+              </Button>
             </div>
             <div className="mt-10">
               <div className="relative">

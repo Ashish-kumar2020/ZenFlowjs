@@ -19,7 +19,6 @@ import { useState } from "react";
 import { signinSchema } from "@/lib/validation";
 import { toast } from "sonner";
 
-
 const Signin = () => {
   const googleLogin = useGoogleAuth();
   const [userDetails, setUserDetails] = useState({
@@ -44,8 +43,8 @@ const Signin = () => {
   };
 
   const handleSignup = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -84,7 +83,12 @@ const Signin = () => {
                       className="pl-10"
                       required
                       value={userDetails.email}
-                      onChange={(e) => setUserDetails({...userDetails, email: e.target.value})}
+                      onChange={(e) =>
+                        setUserDetails({
+                          ...userDetails,
+                          email: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -110,7 +114,12 @@ const Signin = () => {
                       className="pl-10"
                       required
                       value={userDetails.password}
-                      onChange={(e) => setUserDetails({...userDetails, password: e.target.value})}
+                      onChange={(e) =>
+                        setUserDetails({
+                          ...userDetails,
+                          password: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -126,7 +135,17 @@ const Signin = () => {
               Signin
             </Button>
             <div>
-             <span className="text-sm text-zinc-400">Don't have a Account! </span> <span onClick={handleSignup} className="text-sm text-indigo-500 cursor-pointer hover:text-indigo-300">Signup</span>
+              <span className="text-sm text-zinc-400">
+                Don't have an Account!{" "}
+              </span>{" "}
+              <Button
+                variant="link"
+                type="button"
+                onClick={handleSignup}
+                className="text-sm text-indigo-500 cursor-pointer w-4 ml-2 hover:text-indigo-300"
+              >
+                Signup
+              </Button>
             </div>
             <div className="mt-10">
               <div className="relative">

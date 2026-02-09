@@ -2,12 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 
 import Signup from "./components/Signup";
-import Signin from "./components/Singin";
+
 import MainLayout from "./components/MainLayout";
 import HomePage from "./components/HomePage";
+import Signin from "./components/Singin";
 
-function App() {
-  const router = createBrowserRouter([
+const router = createBrowserRouter([
     {
       path: "/",
       element: <MainLayout />,
@@ -24,6 +24,9 @@ function App() {
       ],
     },
   ]);
+
+function App() {
+  
   return <RouterProvider router={router} />;
 }
 

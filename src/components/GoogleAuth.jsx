@@ -5,7 +5,8 @@ const useGoogleAuth = () => {
   const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log("Google access token:", tokenResponse.access_token);
+      
+      console.log("Google access token:");
       // send token to backend here
       navigate("/home");
     },
