@@ -14,9 +14,38 @@ import { FaGithub } from "react-icons/fa";
 
 import { KeyRound, Mail, ShieldCheck, User } from "lucide-react";
 import useGoogleAuth from "./GoogleAuth";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { signinSchema } from "@/lib/validation";
+import { toast } from "sonner";
+
 
 const Signin = () => {
-   const googleLogin = useGoogleAuth();
+  const googleLogin = useGoogleAuth();
+  const [userDetails, setUserDetails] = useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    const validation = signinSchema.safeParse(userDetails);
+    if (!validation.success) {
+      toast.error(validation.error.issues[0].message);
+      return;
+    }
+    setUserDetails({
+      email: "",
+      password: "",
+    });
+    toast.success("Successfully signed in! Welcome to ZenFlowjs");
+    navigate("/home");
+  };
+
+  const handleSignup = () => {
+    navigate("/")
+  }
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -34,8 +63,6 @@ const Signin = () => {
           <CardContent>
             <form>
               <div className="flex flex-col gap-6">
-                
-
                 <div className="grid gap-2">
                   <Label
                     htmlFor="email"
@@ -56,6 +83,8 @@ const Signin = () => {
                       placeholder="m@example.com"
                       className="pl-10"
                       required
+                      value={userDetails.email}
+                      onChange={(e) => setUserDetails({...userDetails, email: e.target.value})}
                     />
                   </div>
                 </div>
@@ -80,6 +109,8 @@ const Signin = () => {
                       placeholder="Enter your password"
                       className="pl-10"
                       required
+                      value={userDetails.password}
+                      onChange={(e) => setUserDetails({...userDetails, password: e.target.value})}
                     />
                   </div>
                 </div>
@@ -90,9 +121,13 @@ const Signin = () => {
             <Button
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-500 text-white"
+              onClick={handleLogin}
             >
               Signin
             </Button>
+            <div>
+             <span className="text-sm text-zinc-400">Don't have a Account! </span> <span onClick={handleSignup} className="text-sm text-indigo-500 cursor-pointer hover:text-indigo-300">Signup</span>
+            </div>
             <div className="mt-10">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -106,13 +141,14 @@ const Signin = () => {
               </div>
 
               <div className="mt-8 grid grid-cols-1 ">
-                <Button variant="outline" className="w-auto text-xs font-bold text-zinc-400"
+                <Button
+                  variant="outline"
+                  className="w-auto text-xs font-bold text-zinc-400"
                   onClick={googleLogin}
                 >
                   <FcGoogle size={18} />
                   Google
                 </Button>
-                
               </div>
             </div>
           </CardFooter>

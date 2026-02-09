@@ -22,9 +22,39 @@ import {
   User,
 } from "lucide-react";
 import useGoogleAuth from "./GoogleAuth";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { signupSchema } from "@/lib/validation";
+import { toast } from "sonner";
 
 const Signup = () => {
-   const googleLogin = useGoogleAuth();
+  const googleLogin = useGoogleAuth();
+  const navigate = useNavigate();
+
+  const [useDetails, setUserDetails] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+  });
+  
+  const handleSignup = () => {
+    const validation = signupSchema.safeParse(useDetails);
+    if (!validation.success) {
+      toast.error(validation.error.issues[0].message)
+      return;
+    }
+    setUserDetails({
+      fullname: "",
+      email: "",
+      password: ""
+    });
+    toast.success("Successfully signed up! Welcome to ZenFlowjs");
+    navigate("/home");
+  };
+
+  const handleLogin = () => {
+    navigate("/login")
+  }
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -62,6 +92,13 @@ const Signup = () => {
                       placeholder="John Doe"
                       className="pl-10"
                       required
+                      value={useDetails.fullname}
+                      onChange={(e) =>
+                        setUserDetails({
+                          ...useDetails,
+                          fullname: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -86,6 +123,10 @@ const Signup = () => {
                       placeholder="m@example.com"
                       className="pl-10"
                       required
+                      value={useDetails.email}
+                      onChange={(e) =>
+                        setUserDetails({ ...useDetails, email: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -110,6 +151,13 @@ const Signup = () => {
                       placeholder="Enter your password"
                       className="pl-10"
                       required
+                      value={useDetails.password}
+                      onChange={(e) =>
+                        setUserDetails({
+                          ...useDetails,
+                          password: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -120,9 +168,14 @@ const Signup = () => {
             <Button
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-500 text-white"
+              onClick={handleSignup}
             >
               Signup
             </Button>
+            <div>
+            <span className="text-sm text-zinc-400">Already have a Account! </span> <span onClick={handleLogin} className="text-sm text-indigo-500 cursor-pointer hover:text-indigo-300">Login</span>
+
+            </div>
             <div className="mt-10">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -136,13 +189,14 @@ const Signup = () => {
               </div>
 
               <div className="mt-8 grid grid-cols-1 ">
-                <Button variant="outline" className="w-auto text-xs font-bold text-zinc-400"
+                <Button
+                  variant="outline"
+                  className="w-auto text-xs font-bold text-zinc-400"
                   onClick={googleLogin}
                 >
                   <FcGoogle size={18} />
                   Google
                 </Button>
-                
               </div>
             </div>
           </CardFooter>
