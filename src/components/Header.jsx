@@ -1,70 +1,109 @@
-import { Moon, Sun, Terminal } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { NavLink } from "react-router-dom";
+import {
+  Moon,
+  LayoutDashboard,
+  FileText,
+  Activity,
+  Terminal,
+  Sun,
+} from "lucide-react";
 
 const Header = () => {
   const [isDark, setIsDark] = useState(true);
 
-  const toogleTheme = () => {
+  const toggleTheme = () => {
     setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark")
+    document.documentElement.classList.toggle("dark");
   };
+
   return (
-    <div className="flex items-center justify-around">
-      <div className="flex items-center gap-3 p-5">
-        <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center cursor-pointer">
-          <Terminal className="w-8 h-8 text-white" />
+    <header className="w-full ">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5">
+
+        {/* Left - Logo */}
+        <div className="flex items-center gap-4">
+          <div className="w-11 h-11 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-600/30">
+            <Terminal />
+          </div>
+          <span className="text-lg font-semibold text-zinc-900 dark:text-white tracking-tight">
+            ZenflowJS
+          </span>
         </div>
-        <span className="text-md font-semibold cursor-pointer">ZenflowJS</span>
-      </div>
 
-      <div className="flex items-center gap-8 ">
-        <ul className="flex gap-6">
-          <Link
+        {/* Center - Navigation */}
+        <nav className="hidden md:flex items-center gap-10 text-sm">
+          <NavLink
             to=""
-            className="hover:underline hover:text-indigo-400 cursor-pointer"
+            end
+            className={({ isActive }) =>
+              `flex items-center gap-2 font-medium ${
+                isActive
+                  ? "text-zinc-900 dark:text-white"
+                  : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
+              }`
+            }
           >
+            <LayoutDashboard size={18} />
             Tasks
-          </Link>
-          <Link
-            to="notes"
-            className="hover:underline hover:text-indigo-400 cursor-pointer"
-          >
-            Notes
-          </Link>
-          <Link
-            to="flow"
-            className="hover:underline hover:text-indigo-400 cursor-pointer"
-          >
-            Flow
-          </Link>
-          <Link
-            to="/home/profile"
-            className="hover:underline hover:text-indigo-400 cursor-pointer"
-          >
-            Profile
-          </Link>
-        </ul>
+          </NavLink>
 
-        <div className="flex items-center gap-4 pr-5">
-          <Button variant="link" onClick={toogleTheme}>
-            {isDark ? <Moon className="cursor-pointer" /> : <Sun className="cursor-pointer"/>}
-          </Button>
+          <NavLink
+            to="notes"
+            className={({ isActive }) =>
+              `flex items-center gap-2 font-medium ${
+                isActive
+                  ? "text-zinc-900 dark:text-white"
+                  : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
+              }`
+            }
+          >
+            <FileText size={18} />
+            Notes
+          </NavLink>
+
+          <NavLink
+            to="flow"
+            className={({ isActive }) =>
+              `flex items-center gap-2 font-medium ${
+                isActive
+                  ? "text-zinc-900 dark:text-white"
+                  : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
+              }`
+            }
+          >
+            <Activity size={18} />
+            Flow
+          </NavLink>
+        </nav>
+
+        {/* Right - User */}
+        <div className="flex items-center gap-6">
+          <button
+            className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition"
+            onClick={toggleTheme}
+          >
+            {isDark ? <Moon /> : <Sun />}
+          </button>
 
           <div className="flex items-center gap-3">
-            <div className="flex flex-col leading-tight">
-              <h2 className="text-sm font-semibold">Ashish Singh</h2>
-              <p className="text-xs text-gray-400">Admin Level</p>
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-semibold text-zinc-900 dark:text-white leading-none">
+                Ashish Singh
+              </p>
+              <p className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
+                Admin Level
+              </p>
             </div>
 
-            <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-semibold">
+            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-600/30">
               A
             </div>
           </div>
         </div>
+
       </div>
-    </div>
+    </header>
   );
 };
 
