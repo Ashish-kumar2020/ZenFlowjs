@@ -1,5 +1,6 @@
 import { Moon, Terminal } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -13,14 +14,34 @@ const Header = () => {
 
       <div className="flex items-center gap-8 ml-auto">
         <ul className="flex gap-6">
-          <li className="hover:underline hover:text-indigo-400 cursor-pointer">Tasks</li>
-          <li className="hover:underline hover:text-indigo-400 cursor-pointer">Notes</li>
-          <li className="hover:underline hover:text-indigo-400 cursor-pointer">Flow</li>
-          <li className="hover:underline hover:text-indigo-400 cursor-pointer">Profile</li>
+          <Link
+            to=""
+            className="hover:underline hover:text-indigo-400 cursor-pointer"
+          >
+            Tasks
+          </Link>
+          <Link
+            to="notes"
+            className="hover:underline hover:text-indigo-400 cursor-pointer"
+          >
+            Notes
+          </Link>
+          <Link
+            to="flow"
+            className="hover:underline hover:text-indigo-400 cursor-pointer"
+          >
+            Flow
+          </Link>
+          <Link
+            to="/home/profile"
+            className="hover:underline hover:text-indigo-400 cursor-pointer"
+          >
+            Profile
+          </Link>
         </ul>
 
         <div className="flex items-center gap-4 pr-5">
-          <Moon className="cursor-pointer"/>
+          <Moon className="cursor-pointer" />
 
           <div className="flex items-center gap-3">
             <div className="flex flex-col leading-tight">
