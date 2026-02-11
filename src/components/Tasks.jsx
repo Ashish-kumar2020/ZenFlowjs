@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { CheckCircle, InboxIcon, Plus, Zap } from "lucide-react";
 import WorkFlowBoard from "./WorkFlowBoard";
+import TodoInput from "./TodoInput";
 
 const Tasks = () => {
   const [todoData, setTodoData] = useState({
@@ -9,8 +10,8 @@ const Tasks = () => {
     description: "",
   });
   const [backlogTaskCount, setBacllogTaskCount] = useState(0);
-  const [inprogressTaskCont,setInprogressTaskCount] = useState(0);
-  const [doneTaskCount,setDoneTaskCount] = useState(0);
+  const [inprogressTaskCont, setInprogressTaskCount] = useState(0);
+  const [doneTaskCount, setDoneTaskCount] = useState(0);
   const submitTodo = (e) => {
     e.preventDefault();
     console.log("Todo Submitted", todoData);
@@ -21,7 +22,6 @@ const Tasks = () => {
     setBacllogTaskCount(0);
     setInprogressTaskCount(0);
     setDoneTaskCount(0);
-
   };
 
   const isTodoValid =
@@ -33,23 +33,24 @@ const Tasks = () => {
         <div className="max-w-4xl mx-auto w-full mb-12">
           <form className="bg-zinc-900/50 border border-zinc-800 p-1.5 rounded-2xl flex flex-col md:flex-row gap-2 shadow-2xl focus-within:border-indigo-500/50 transition-colors">
             <div className="flex-1 flex flex-col md:flex-row gap-2 px-2">
-              <input
+              <TodoInput
                 type="text"
                 value={todoData.title}
                 onChange={(e) =>
                   setTodoData({ ...todoData, title: e.target.value })
                 }
-                className="flex-[0.4] bg-transparent text-zinc-100 placeholder-zinc-600 px-4 py-3 outline-none border-b md:border-b-0 md:border-r border-zinc-800 focus:border-indigo-500/50 transition-colors"
                 placeholder="Task Title..."
+                className="flex-[0.4] bg-transparent text-zinc-100 placeholder-zinc-600 px-4 py-3 outline-none border-b md:border-b-0 md:border-r border-zinc-800 focus:border-indigo-500/50 transition-colors"
               />
-              <input
+
+              <TodoInput
                 type="text"
                 value={todoData.description}
                 onChange={(e) =>
                   setTodoData({ ...todoData, description: e.target.value })
                 }
-                className="flex-1 bg-transparent text-zinc-100 placeholder-zinc-600 px-4 py-3 outline-none"
                 placeholder="Describe the objective..."
+                className="flex-[0.4] bg-transparent text-zinc-100 placeholder-zinc-600 px-4 py-3 outline-none border-b md:border-b-0  border-zinc-800 focus:border-indigo-500/50 transition-colors"
               />
             </div>
             <Button
@@ -73,7 +74,6 @@ const Tasks = () => {
 
         {/* Backlog -> Inprogress -> Done */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-
           {/* Backlog */}
           <WorkFlowBoard
             title="Backlog"
@@ -100,9 +100,6 @@ const Tasks = () => {
             Icon={CheckCircle}
             iconClassName="text-green-500"
           />
-
-          
-          
         </div>
       </div>
     </div>
