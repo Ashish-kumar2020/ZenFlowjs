@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { CheckCircle, InboxIcon, Plus, Zap } from "lucide-react";
+import WorkFlowBoard from "./WorkFlowBoard";
 
 const Tasks = () => {
   const [todoData, setTodoData] = useState({
     title: "",
     description: "",
   });
-
+  const [backlogTaskCount, setBacllogTaskCount] = useState(0);
+  const [inprogressTaskCont,setInprogressTaskCount] = useState(0);
+  const [doneTaskCount,setDoneTaskCount] = useState(0);
   const submitTodo = (e) => {
     e.preventDefault();
     console.log("Todo Submitted", todoData);
@@ -15,6 +18,10 @@ const Tasks = () => {
       title: "",
       description: "",
     });
+    setBacllogTaskCount(0);
+    setInprogressTaskCount(0);
+    setDoneTaskCount(0);
+
   };
 
   const isTodoValid =
@@ -66,69 +73,36 @@ const Tasks = () => {
 
         {/* Backlog -> Inprogress -> Done */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
           {/* Backlog */}
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between px-2 mb-2">
-              <div className="flex items-center gap-3">
-                <InboxIcon size={18} />
-                <h2 className="text-lg font-bold text-zinc-200">Backlog</h2>
-                <span className="bg-zinc-800 text-zinc-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">
-                  0
-                </span>
-              </div>
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest">
-                Queued
-              </span>
-            </div>
-            <div className="flex flex-col gap-4 min-h-[500px] bg-zinc-900/20 rounded-2xl p-2 border border-dashed border-zinc-800/50">
-              <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-10 opacity-50">
-                <p className="text-sm">Empty Space</p>
-              </div>
-            </div>
-          </div>
+          <WorkFlowBoard
+            title="Backlog"
+            statusLabel="Queued"
+            totalTask={backlogTaskCount}
+            Icon={InboxIcon}
+            iconClassName="text-zinc-200"
+          />
 
           {/* InProgress */}
-
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between px-2 mb-2">
-              <div className="flex items-center gap-3">
-                <Zap className="text-yellow-400" size={18} />
-                <h2 className="text-lg font-bold text-zinc-200">In Progress</h2>
-                <span className="bg-zinc-800 text-zinc-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">
-                  0
-                </span>
-              </div>
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest">
-                Active
-              </span>
-            </div>
-            <div className="flex flex-col gap-4 min-h-[500px] bg-zinc-900/20 rounded-2xl p-2 border border-dashed border-zinc-800/50">
-              <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-10 opacity-50">
-                <p className="text-sm">Empty Space</p>
-              </div>
-            </div>
-          </div>
+          <WorkFlowBoard
+            title="In Progress"
+            statusLabel="Active"
+            totalTask={inprogressTaskCont}
+            Icon={Zap}
+            iconClassName="text-yellow-400"
+          />
 
           {/* Done */}
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between px-2 mb-2">
-              <div className="flex items-center gap-3">
-                <CheckCircle className="text-green-500" size={18} />
-                <h2 className="text-lg font-bold text-zinc-200">Done</h2>
-                <span className="bg-zinc-800 text-zinc-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">
-                  0
-                </span>
-              </div>
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest">
-                Completed
-              </span>
-            </div>
-            <div className="flex flex-col gap-4 min-h-[500px] bg-zinc-900/20 rounded-2xl p-2 border border-dashed border-zinc-800/50">
-              <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-10 opacity-50">
-                <p className="text-sm">Empty Space</p>
-              </div>
-            </div>
-          </div>
+          <WorkFlowBoard
+            title="Done"
+            statusLabel="Completed"
+            totalTask={doneTaskCount}
+            Icon={CheckCircle}
+            iconClassName="text-green-500"
+          />
+
+          
+          
         </div>
       </div>
     </div>
