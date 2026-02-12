@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { Button } from "./ui/button";
 import { CheckCircle, InboxIcon, Plus, Zap } from "lucide-react";
 import WorkFlowBoard from "./WorkFlowBoard";
 import TodoInput from "./TodoInput";
-
 
 const Tasks = () => {
   const [todoData, setTodoData] = useState({
     title: "",
     description: "",
   });
-  const [backlogTask, setBacklogTask] = useState([]);
-  const [backlogTaskCount, setBacllogTaskCount] = useState(0);
-  const [inprogressTaskCont, setInprogressTaskCount] = useState(0);
-  const [doneTaskCount, setDoneTaskCount] = useState(0);
+  const [backlogTask, setBacklogTask] = useState(() => {
+    const saved = localStorage.getItem("backlogTodos");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const submitTodo = (e) => {
     e.preventDefault();
 
@@ -28,19 +28,24 @@ const Tasks = () => {
       localStorage.setItem("backlogTodos", JSON.stringify(updated));
       return updated;
     });
-    console.log("Todo Submitted", todoData);
-   
 
     setTodoData({
       title: "",
       description: "",
     });
 
-    console.log(localStorage.getItem("backlogTodos"));
-    setBacllogTaskCount(0);
-    setInprogressTaskCount(0);
-    setDoneTaskCount(0);
   };
+
+   const removeTask = (id) => {
+    setBacklogTask((prev) => {
+      const updated = prev.filter((task) => task.id !== id);
+      localStorage.setItem("backlogTodos", JSON.stringify(updated));
+    return updated;
+    })
+
+  }
+
+  
 
   const isTodoValid =
     todoData.title.trim() !== "" && todoData.description.trim() !== "";
@@ -96,16 +101,18 @@ const Tasks = () => {
           <WorkFlowBoard
             title="Backlog"
             statusLabel="Queued"
-            totalTask={backlogTaskCount}
+            totalTask={backlogTask.length}
             Icon={InboxIcon}
             iconClassName="text-zinc-200"
+            tasks={backlogTask}
+            removeTask={removeTask}
           />
 
           {/* InProgress */}
           <WorkFlowBoard
             title="In Progress"
             statusLabel="Active"
-            totalTask={inprogressTaskCont}
+            totalTask="0"
             Icon={Zap}
             iconClassName="text-yellow-400"
           />
@@ -114,11 +121,10 @@ const Tasks = () => {
           <WorkFlowBoard
             title="Done"
             statusLabel="Completed"
-            totalTask={doneTaskCount}
+            totalTask="0"
             Icon={CheckCircle}
             iconClassName="text-green-500"
           />
-          
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 
 import React from "react";
+import TaskCard from "./TaskCard";
 
 const WorkFlowBoard = ({
   title,
@@ -7,7 +8,12 @@ const WorkFlowBoard = ({
   totalTask,
   Icon,
   iconClassName,
+  tasks =[],
+  removeTask
 }) => {
+  const isBackLogTaskAvaiabe = tasks.length > 0;
+
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between px-2 mb-2">
@@ -24,7 +30,10 @@ const WorkFlowBoard = ({
       </div>
       <div className="flex flex-col gap-4 min-h-[500px] bg-zinc-900/20 rounded-2xl p-2 border border-dashed border-zinc-800/50">
         <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-10 opacity-50">
-          <p className="text-sm">Empty Space</p>
+          {isBackLogTaskAvaiabe ? <TaskCard 
+            tasks={tasks}
+            removeTask={removeTask}
+          /> : <p className="text-sm">Empty Space</p>}
         </div>
       </div>
     </div>
