@@ -29,7 +29,7 @@ const WorkFlowBoard = ({
         </span>
       </div>
       <div className="flex flex-col gap-4 min-h-[500px] bg-zinc-900/20 rounded-2xl p-2 border border-dashed border-zinc-800/50">
-        <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-10 opacity-50">
+        <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-2 opacity-50">
           {isBackLogTaskAvaiabe ? <TaskCard 
             tasks={tasks}
             removeTask={removeTask}

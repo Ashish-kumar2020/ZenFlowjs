@@ -14,7 +14,7 @@ const TaskCard = ({ tasks = [],removeTask }) => {
   return (
     <>
       {tasks.map((task) => (
-        <div key={task.id} className="w-full group relative bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-indigo-500/50 transition-all duration-200 shadow-lg">
+        <div key={task.id} className="w-full group mb-4 relative bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-indigo-500/50 transition-all duration-200 shadow-lg">
           <div className="flex justify-between items-start mb-2">
             <h3 className="font-semibold text-zinc-100 line-clamp-1">{task.title}</h3>
             <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
