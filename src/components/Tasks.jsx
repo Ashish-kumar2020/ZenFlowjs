@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { CheckCircle, InboxIcon, Plus, Zap } from "lucide-react";
 import WorkFlowBoard from "./WorkFlowBoard";
@@ -12,6 +12,11 @@ const Tasks = () => {
   const [backlogTask, setBacklogTask] = useState(() => {
     const saved = localStorage.getItem("backlogTodos");
     return saved ? JSON.parse(saved) : [];
+  });
+
+  const [inprogressTask, setInProgressTask] = useState(() => {
+    const currentTask = localStorage.getItem("inprogressTask");
+    return currentTask ? JSON.parse(currentTask) : [];
   });
 
   const submitTodo = (e) => {
@@ -33,19 +38,40 @@ const Tasks = () => {
       title: "",
       description: "",
     });
-
   };
 
-   const removeTask = (id) => {
+  const removeTask = (id) => {
     setBacklogTask((prev) => {
       const updated = prev.filter((task) => task.id !== id);
       localStorage.setItem("backlogTodos", JSON.stringify(updated));
-    return updated;
-    })
+      return updated;
+    });
+  };
 
-  }
+  const moveTask = (id) => {
+    console.log("Task Moved to Inprogress", id);
+    const taskToMove = backlogTask.find((task) => task.id === id);
+    if (!taskToMove) return;
 
-  
+    
+    
+    const updatedInProgressTask = [
+      ...inprogressTask,
+      { ...taskToMove, status: "inprogress" },
+    ];
+    setBacklogTask((prev) => {
+      const updated = prev.filter((task) => task.id !== id);
+      localStorage.setItem("backlogTodos", JSON.stringify(updated));
+      return updated;
+    });
+
+    setInProgressTask(updatedInProgressTask);
+
+    localStorage.setItem(
+      "inprogressTask",
+      JSON.stringify(updatedInProgressTask),
+    );
+  };
 
   const isTodoValid =
     todoData.title.trim() !== "" && todoData.description.trim() !== "";
@@ -106,15 +132,18 @@ const Tasks = () => {
             iconClassName="text-zinc-200"
             tasks={backlogTask}
             removeTask={removeTask}
+            moveTask={moveTask}
           />
 
           {/* InProgress */}
           <WorkFlowBoard
             title="In Progress"
             statusLabel="Active"
-            totalTask="0"
+            totalTask={inprogressTask.length}
             Icon={Zap}
             iconClassName="text-yellow-400"
+            tasks={inprogressTask}
+            moveTask={moveTask}
           />
 
           {/* Done */}

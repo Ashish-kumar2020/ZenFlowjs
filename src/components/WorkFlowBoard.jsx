@@ -9,7 +9,8 @@ const WorkFlowBoard = ({
   Icon,
   iconClassName,
   tasks =[],
-  removeTask
+  removeTask,
+  moveTask
 }) => {
   const isBackLogTaskAvaiabe = tasks.length > 0;
 
@@ -33,6 +34,7 @@ const WorkFlowBoard = ({
           {isBackLogTaskAvaiabe ? <TaskCard 
             tasks={tasks}
             removeTask={removeTask}
+            moveTask={moveTask}
           /> : <p className="text-sm">Empty Space</p>}
         </div>
       </div>

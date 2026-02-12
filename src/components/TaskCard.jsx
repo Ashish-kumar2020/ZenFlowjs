@@ -4,21 +4,23 @@ import { Button } from "./ui/button";
 import DatePicker from "./DatePicker";
 import { MoveRight, Trash } from "lucide-react";
 
-const TaskCard = ({ tasks = [],removeTask }) => {
-
-  const moveTask = (taskId) => {
-    console.log("task Moved",taskId)
-  }
-
-
+const TaskCard = ({ tasks = [], removeTask,moveTask }) => {
   return (
     <>
       {tasks.map((task) => (
-        <div key={task.id} className="w-full group mb-4 relative bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-indigo-500/50 transition-all duration-200 shadow-lg">
+        <div
+          key={task.id}
+          className="w-full group mb-4 relative bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 hover:border-indigo-500/50 transition-all duration-200 shadow-lg"
+        >
           <div className="flex justify-between items-start mb-2">
-            <h3 className="font-semibold text-zinc-100 line-clamp-1">{task.title}</h3>
+            <h3 className="font-semibold text-zinc-100 line-clamp-1">
+              {task.title}
+            </h3>
             <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Button onClick={() => removeTask(task.id)} className="p-1.5 text-zinc-500 hover:text-rose-400 hover:bg-rose-400/10 rounded-lg transition-colors">
+              <Button
+                onClick={() => removeTask(task.id)}
+                className="p-1.5 text-zinc-500 hover:text-rose-400 hover:bg-rose-400/10 rounded-lg transition-colors"
+              >
                 <Trash size={16} />
               </Button>
             </div>
@@ -40,7 +42,10 @@ const TaskCard = ({ tasks = [],removeTask }) => {
               <DatePicker />
             </div>
             <DatePicker />
-            <Button onClick={() => moveTask(task.id)} className="group w-full flex items-center justify-center gap-2 py-2 text-[12px] font-medium text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-lg transition-all">
+            <Button
+              onClick={() => moveTask(task.id)}
+              className="group w-full flex items-center justify-center gap-2 py-2 text-[12px] font-medium text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-lg transition-all"
+            >
               Move to IN PROGRESS{" "}
               <MoveRight
                 size={14}
