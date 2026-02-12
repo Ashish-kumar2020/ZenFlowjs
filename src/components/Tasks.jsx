@@ -4,21 +4,39 @@ import { CheckCircle, InboxIcon, Plus, Zap } from "lucide-react";
 import WorkFlowBoard from "./WorkFlowBoard";
 import TodoInput from "./TodoInput";
 
+
 const Tasks = () => {
   const [todoData, setTodoData] = useState({
     title: "",
     description: "",
   });
+  const [backlogTask, setBacklogTask] = useState([]);
   const [backlogTaskCount, setBacllogTaskCount] = useState(0);
   const [inprogressTaskCont, setInprogressTaskCount] = useState(0);
   const [doneTaskCount, setDoneTaskCount] = useState(0);
   const submitTodo = (e) => {
     e.preventDefault();
+
+    const newTodo = {
+      ...todoData,
+      id: Date.now(),
+      status: "backlog",
+    };
+
+    setBacklogTask((prev) => {
+      const updated = [...prev, newTodo];
+      localStorage.setItem("backlogTodos", JSON.stringify(updated));
+      return updated;
+    });
     console.log("Todo Submitted", todoData);
+   
+
     setTodoData({
       title: "",
       description: "",
     });
+
+    console.log(localStorage.getItem("backlogTodos"));
     setBacllogTaskCount(0);
     setInprogressTaskCount(0);
     setDoneTaskCount(0);
@@ -100,6 +118,7 @@ const Tasks = () => {
             Icon={CheckCircle}
             iconClassName="text-green-500"
           />
+          
         </div>
       </div>
     </div>
