@@ -4,7 +4,16 @@ import { Button } from "./ui/button";
 import DatePicker from "./DatePicker";
 import { MoveRight, Trash } from "lucide-react";
 
-const TaskCard = ({ tasks = [], removeTask,moveTask }) => {
+const TaskCard = ({
+  tasks = [],
+  removeTask,
+  moveTask,
+  buttonLabel,
+  updateTaskPriority,
+  updateStartDate,
+  updateEndDate,
+  readonly
+}) => {
   return (
     <>
       {tasks.map((task) => (
@@ -32,26 +41,41 @@ const TaskCard = ({ tasks = [], removeTask,moveTask }) => {
 
           <div className="space-y-3 pt-3 border-t border-zinc-800/50">
             <div className="flex flex-wrap gap-2">
-              <select className="appearance-none bg-zinc-800/80 text-[11px] font-bold px-3 py-1.5 rounded-md border border-transparent hover:border-zinc-700 transition-colors focus:outline-none text-zinc-400">
-                <option>PRIORITY</option>
-                <option>LOW</option>
-                <option>MEDIUM</option>
-                <option>HIGH</option>
+              <select
+              disabled={readonly}
+                value={task.priority}
+                onChange={(e) => updateTaskPriority(task.id, e.target.value)}
+                className="appearance-none bg-zinc-800/80 text-[11px] font-bold px-3 py-1.5 rounded-md border border-transparent hover:border-zinc-700 transition-colors focus:outline-none text-zinc-400"
+              >
+                <option value="">PRIORITY</option>
+                <option value="low">LOW</option>
+                <option value="medium">MEDIUM</option>
+                <option value="high">HIGH</option>
               </select>
 
-              <DatePicker />
-            </div>
-            <DatePicker />
-            <Button
-              onClick={() => moveTask(task.id)}
-              className="group w-full flex items-center justify-center gap-2 py-2 text-[12px] font-medium text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-lg transition-all"
-            >
-              Move to IN PROGRESS{" "}
-              <MoveRight
-                size={14}
-                className="opacity-80 group-hover:translate-x-1 transition-transform duration-200"
+              <DatePicker
+                value={task.startDate}
+                onChange={(date) => updateStartDate(task.id, date)}
+                disabled={readonly}
               />
-            </Button>
+            </div>
+            <DatePicker 
+              value={task.endDate}
+              onChange={(date) => updateEndDate(task.id ,date)}
+              disabled={readonly}
+            />
+            {moveTask && (
+              <Button
+                onClick={() => moveTask(task.id)}
+                className="group w-full flex items-center justify-center gap-2 py-2 text-[12px] font-medium text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-lg transition-all"
+              >
+                {buttonLabel}{" "}
+                <MoveRight
+                  size={14}
+                  className="opacity-80 group-hover:translate-x-1 transition-transform duration-200"
+                />
+              </Button>
+            )}
           </div>
         </div>
       ))}

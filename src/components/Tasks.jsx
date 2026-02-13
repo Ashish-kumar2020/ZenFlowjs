@@ -4,6 +4,7 @@ import { CheckCircle, InboxIcon, Plus, Zap } from "lucide-react";
 import WorkFlowBoard from "./WorkFlowBoard";
 import TodoInput from "./TodoInput";
 
+
 const Tasks = () => {
   const [todoData, setTodoData] = useState({
     title: "",
@@ -11,6 +12,11 @@ const Tasks = () => {
   });
   const [backlogTask, setBacklogTask] = useState(() => {
     const saved = localStorage.getItem("backlogTodos");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [doneTask, setDoneTask] = useState(() => {
+    const saved = localStorage.getItem("doneTask");
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -26,6 +32,9 @@ const Tasks = () => {
       ...todoData,
       id: Date.now(),
       status: "backlog",
+      priority: "low",
+      startDate: "",
+      endDate: "",
     };
 
     setBacklogTask((prev) => {
@@ -40,37 +49,97 @@ const Tasks = () => {
     });
   };
 
+  const updateStartDate = (id, startDate) => {
+    const update = (tasks) =>
+      tasks.map((task) => (task.id === id ? { ...task, startDate } : task));
+    const updatedBacklog = update(backlogTask);
+    const updatedInProgress = update(inprogressTask);
+    const updatedDone = update(doneTask);
+
+    setBacklogTask(updatedBacklog);
+    setInProgressTask(updatedInProgress);
+    setDoneTask(updatedDone);
+
+    localStorage.setItem("backlogTodos", JSON.stringify(updatedBacklog));
+    localStorage.setItem("inprogressTask", JSON.stringify(updatedInProgress));
+    localStorage.setItem("doneTask", JSON.stringify(updatedDone));
+  };
+   const updateEndDate = (id, endDate) => {
+    const update = (tasks) =>
+      tasks.map((task) => (task.id === id ? { ...task, endDate } : task));
+    const updatedBacklog = update(backlogTask);
+    const updatedInProgress = update(inprogressTask);
+    const updatedDone = update(doneTask);
+
+    setBacklogTask(updatedBacklog);
+    setInProgressTask(updatedInProgress);
+    setDoneTask(updatedDone);
+
+    localStorage.setItem("backlogTodos", JSON.stringify(updatedBacklog));
+    localStorage.setItem("inprogressTask", JSON.stringify(updatedInProgress));
+    localStorage.setItem("doneTask", JSON.stringify(updatedDone));
+  };
+
+  const updateTaskPriority = (id, priority) => {
+    const update = (tasks) =>
+      tasks.map((task) => (task.id === id ? { ...task, priority } : task));
+
+    const updatedBacklog = update(backlogTask);
+    const updatedInProgress = update(inprogressTask);
+    const updatedDone = update(doneTask);
+
+    setBacklogTask(updatedBacklog);
+    setInProgressTask(updatedInProgress);
+    setDoneTask(updatedDone);
+
+    localStorage.setItem("backlogTodos", JSON.stringify(updatedBacklog));
+    localStorage.setItem("inprogressTask", JSON.stringify(updatedInProgress));
+    localStorage.setItem("doneTask", JSON.stringify(updatedDone));
+  };
+
   const removeTask = (id) => {
-    setBacklogTask((prev) => {
-      const updated = prev.filter((task) => task.id !== id);
-      localStorage.setItem("backlogTodos", JSON.stringify(updated));
-      return updated;
-    });
+    const updatedBacklog = backlogTask.filter((t) => t.id !== id);
+    const updatedInProgress = inprogressTask.filter((t) => t.id !== id);
+    const updatedDone = doneTask.filter((t) => t.id !== id);
+
+    setBacklogTask(updatedBacklog);
+    setInProgressTask(updatedInProgress);
+    setDoneTask(updatedDone);
+
+    localStorage.setItem("backlogTodos", JSON.stringify(updatedBacklog));
+    localStorage.setItem("inprogressTask", JSON.stringify(updatedInProgress));
+    localStorage.setItem("doneTask", JSON.stringify(updatedDone));
   };
 
   const moveTask = (id) => {
-    console.log("Task Moved to Inprogress", id);
     const taskToMove = backlogTask.find((task) => task.id === id);
     if (!taskToMove) return;
 
-    
-    
-    const updatedInProgressTask = [
+    const updatedBacklog = backlogTask.filter((task) => task.id !== id);
+    const updatedInProgress = [
       ...inprogressTask,
       { ...taskToMove, status: "inprogress" },
     ];
-    setBacklogTask((prev) => {
-      const updated = prev.filter((task) => task.id !== id);
-      localStorage.setItem("backlogTodos", JSON.stringify(updated));
-      return updated;
-    });
 
-    setInProgressTask(updatedInProgressTask);
+    setBacklogTask(updatedBacklog);
+    setInProgressTask(updatedInProgress);
 
-    localStorage.setItem(
-      "inprogressTask",
-      JSON.stringify(updatedInProgressTask),
-    );
+    localStorage.setItem("backlogTodos", JSON.stringify(updatedBacklog));
+    localStorage.setItem("inprogressTask", JSON.stringify(updatedInProgress));
+  };
+
+  const moveTaskToDone = (id) => {
+    const taskToMove = inprogressTask.find((task) => task.id === id);
+    if (!taskToMove) return;
+
+    const updatedInProgress = inprogressTask.filter((task) => task.id !== id);
+    const updatedDone = [...doneTask, { ...taskToMove, status: "done" }];
+
+    setInProgressTask(updatedInProgress);
+    setDoneTask(updatedDone);
+
+    localStorage.setItem("inprogressTask", JSON.stringify(updatedInProgress));
+    localStorage.setItem("doneTask", JSON.stringify(updatedDone));
   };
 
   const isTodoValid =
@@ -133,6 +202,10 @@ const Tasks = () => {
             tasks={backlogTask}
             removeTask={removeTask}
             moveTask={moveTask}
+            buttonLabel="Move to IN PROGRESS"
+            updateTaskPriority={updateTaskPriority}
+            updateStartDate={updateStartDate}
+            updateEndDate={updateEndDate}
           />
 
           {/* InProgress */}
@@ -143,16 +216,24 @@ const Tasks = () => {
             Icon={Zap}
             iconClassName="text-yellow-400"
             tasks={inprogressTask}
-            moveTask={moveTask}
+            moveTask={moveTaskToDone}
+            removeTask={removeTask}
+            buttonLabel="Move to DONE"
+            updateTaskPriority={updateTaskPriority}
+            updateStartDate={updateStartDate}
+            updateEndDate={updateEndDate}
           />
 
           {/* Done */}
           <WorkFlowBoard
             title="Done"
             statusLabel="Completed"
-            totalTask="0"
+            totalTask={doneTask.length}
+            tasks={doneTask}
             Icon={CheckCircle}
             iconClassName="text-green-500"
+            removeTask={removeTask}
+            readonly
           />
         </div>
       </div>

@@ -2,6 +2,7 @@
 import React from "react";
 import TaskCard from "./TaskCard";
 
+
 const WorkFlowBoard = ({
   title,
   statusLabel,
@@ -10,7 +11,13 @@ const WorkFlowBoard = ({
   iconClassName,
   tasks =[],
   removeTask,
-  moveTask
+  moveTask,
+  buttonLabel,
+  updateTaskPriority,
+  updateStartDate,
+  updateEndDate,
+  readonly
+  
 }) => {
   const isBackLogTaskAvaiabe = tasks.length > 0;
 
@@ -35,6 +42,11 @@ const WorkFlowBoard = ({
             tasks={tasks}
             removeTask={removeTask}
             moveTask={moveTask}
+            buttonLabel={buttonLabel}
+            updateTaskPriority={updateTaskPriority}
+            updateStartDate={updateStartDate}
+            updateEndDate={updateEndDate}
+            readonly={readonly}
           /> : <p className="text-sm">Empty Space</p>}
         </div>
       </div>
