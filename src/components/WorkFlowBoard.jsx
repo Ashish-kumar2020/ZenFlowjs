@@ -1,7 +1,5 @@
-
 import React from "react";
 import TaskCard from "./TaskCard";
-
 
 const WorkFlowBoard = ({
   title,
@@ -9,18 +7,16 @@ const WorkFlowBoard = ({
   totalTask,
   Icon,
   iconClassName,
-  tasks =[],
+  tasks = [],
   removeTask,
   moveTask,
   buttonLabel,
   updateTaskPriority,
   updateStartDate,
   updateEndDate,
-  readonly
-  
+  readonly,
 }) => {
   const isBackLogTaskAvaiabe = tasks.length > 0;
-
 
   return (
     <div className="flex flex-col gap-4">
@@ -37,17 +33,21 @@ const WorkFlowBoard = ({
         </span>
       </div>
       <div className="flex flex-col gap-4 min-h-[500px] bg-zinc-900/20 rounded-2xl p-2 border border-dashed border-zinc-800/50">
-        <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-2 opacity-50">
-          {isBackLogTaskAvaiabe ? <TaskCard 
-            tasks={tasks}
-            removeTask={removeTask}
-            moveTask={moveTask}
-            buttonLabel={buttonLabel}
-            updateTaskPriority={updateTaskPriority}
-            updateStartDate={updateStartDate}
-            updateEndDate={updateEndDate}
-            readonly={readonly}
-          /> : <p className="text-sm">Empty Space</p>}
+        <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 py-2 opacity-100">
+          {isBackLogTaskAvaiabe ? (
+            <TaskCard
+              tasks={tasks}
+              removeTask={removeTask}
+              moveTask={moveTask}
+              buttonLabel={buttonLabel}
+              updateTaskPriority={updateTaskPriority}
+              updateStartDate={updateStartDate}
+              updateEndDate={updateEndDate}
+              readonly={readonly}
+            />
+          ) : (
+            <p className="text-sm">No Task Found</p>
+          )}
         </div>
       </div>
     </div>
